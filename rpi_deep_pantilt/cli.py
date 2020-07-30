@@ -17,17 +17,22 @@ from rpi_deep_pantilt.detect.facessd_mobilenet_v2 import (
     FaceSSD_MobileNet_V2_EdgeTPU,
     LABELS as FaceSSDLabels
 )
+from rpi_deep_pantilt.detect.Signs_tiny_yolo import (
+    FaceSSD_MobileNet_V2,
+    LABELS as SignLabels
+)
+
 from rpi_deep_pantilt.control.manager import pantilt_process_manager
 from rpi_deep_pantilt.control.hardware_test import pantilt_test, camera_test
 
 
 def validate_labels(labels):
     for label in labels:
-        if label not in (SSDMobileNetLabels + FaceSSDLabels):
+        if label not in (SSDMobileNetLabels + FaceSSDLabels + SignLabels):
             logging.error(f'''
             Invalid label: {label} \n
             Please choose any of the following labels: \n
-            {SSDMobileNetLabels + FaceSSDLabels}
+            {SSDMobileNetLabels + FaceSSDLabels + SignLabels}
             ''')
             sys.exit(1)
 
@@ -85,6 +90,9 @@ def detect(labels, loglevel, edge_tpu, rotation):
             model_cls = FaceSSD_MobileNet_V2_EdgeTPU
         else:
             model_cls = FaceSSD_MobileNet_V2
+    #use the tiny yolo         
+    elif 'signs' in labels:
+        model_cls = Signs_tiny_yolo_PostProcessed
     # All other labels are detected by SSDMobileNetV3 model
     else:
         if edge_tpu:

@@ -1,0 +1,18 @@
+item {
+  name: "Chemical_Sign"
+  id: 1
+  display_name: "Chemical_Sign"
+}
+item {
+  name: "Aruco"
+  id: 2
+  display_name: "Aruco"
+}
+item {
+  name: "Dangerous_Goods"
+  id: 3
+  display_name: "Dangerous_Goods"
+}
+
+
+
